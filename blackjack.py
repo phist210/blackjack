@@ -111,23 +111,23 @@ def main():
     """Play a hand of blackjack."""
 
     deck_this_round = Deck()
-    hand = Player(deck_this_round)
+    player_hand = Player(deck_this_round)
     dealer = Player(deck_this_round)
 
     clear()
     # Welcome screen
     print("========\/\/\/\/\/ Welcome to 21 Pythonjack! \/\/\/\/\/========\n")
-    print("Suits:  [S] = Spades | [C] = Clubs | [D] = Diamonds | [H] = Hearts")
-    print("Values:  [A] = Ace(1) | [T] = 10 | [J] = Jack | [Q] = Queen | [K] = King\n")
+    print("Suits: [S] = Spades | [C] = Clubs | [D] = Diamonds | [H] = Hearts")
+    print("Values: [A] = Ace(1) | [T] = 10 | [J] = Jack | [Q] = Queen | [K] = King\n")
     print("Dealer's hand: {}".format(dealer.game_deck[0]))
 
     # Player logic
     while True:
-        print("Your hand: {} | Total = {}\n".format(hand, hand.value))
-        if hand.blackjack:
+        print("Your hand: {} | Total = {}\n".format(player_hand, player_hand.value))
+        if player_hand.blackjack:
             print("BLACKJACK!")
             play_again()
-        if hand.bust:
+        if player_hand.bust:
             print("Bust! You LOSE!\n")
             play_again()
         print("What's your move?")
@@ -136,7 +136,7 @@ def main():
         if choice == 's':
             break
         elif choice == 'h':
-            card = hand.draw(deck_this_round)
+            card = player_hand.draw(deck_this_round)
             print("\nYou drew: {}".format(card))
         else:
             print("Invalid input. Try again!\n")
@@ -153,24 +153,24 @@ def main():
         print("Dealer is bust. You WIN!\n")
         play_again()
 
-    elif dealer.blackjack and not hand.blackjack:
-        print("Dealer's blackjack beats your {}\n".format(hand.value))
+    elif dealer.blackjack and not player_hand.blackjack:
+        print("Dealer's blackjack beats your {}\n".format(player_hand.value))
         play_again()
 
-    elif hand.blackjack and not dealer.blackjack:
+    elif player_hand.blackjack and not dealer.blackjack:
         print("Your blackjack beats dealer's {}!\n".format(dealer.value))
         play_again()
 
-    elif dealer.value > hand.value:
-        print("Dealer's {} beats your {}!\n".format(dealer.value, hand.value))
+    elif dealer.value > player_hand.value:
+        print("Dealer's {} beats your {}!\n".format(dealer.value, player_hand.value))
         play_again()
 
-    elif hand.value > dealer.value:
-        print("Your {} beats dealer's {}!\n".format(hand.value, dealer.value))
+    elif player_hand.value > dealer.value:
+        print("Your {} beats dealer's {}!\n".format(player_hand.value, dealer.value))
         play_again()
 
     else:
-        print("Push: {} each\n".format(hand.value))
+        print("Push: {} each\n".format(player_hand.value))
         play_again()
 
 
