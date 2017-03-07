@@ -35,7 +35,7 @@ class Deck:
 
 
 class Player:
-    """A hand of cards in blackjack."""
+    """A hand of cards in blackjack and the deck for that game"""
     def __init__(self, DECK):
         self.game_deck = []
         for i in range(2):
@@ -71,14 +71,19 @@ class Player:
             return value
 
     @property
+    def blackjack(self):
+        """True if this hand is blackjack!"""
+        return self.soft_value == 21
+
+    @property
     def bust(self):
         """True if this hand is bust."""
         return self.soft_value > 21
-
-    @property
-    def blackjack(self):
-        """True if this hand is a blackjack (ace plus ten or face card)."""
-        return len(self.game_deck) == 2 and self.value == 21
+    #
+    # @property
+    # def blackjack(self):
+    #     """True if this hand is a blackjack (ace plus ten or face card)."""
+    #     return len(self.game_deck) == 2 and self.value == 21
 
 
 # ===================================================
@@ -119,11 +124,14 @@ def main():
     # Player logic
     while True:
         print("Your hand: {} | Total = {}\n".format(hand, hand.value))
+        if hand.blackjack:
+            print("BLACKJACK!")
+            play_again()
         if hand.bust:
             print("Bust! You LOSE!\n")
             play_again()
         print("What's your move?")
-        choice = input("\n[H]it or [S]tay? ").lower()
+        choice = input("      [H]it or [S]tand? ").lower()
 
         if choice == 's':
             break
